@@ -14,20 +14,21 @@ void PrintTree(BinaryTree tree)
 
 
 BinaryTree tree = new BinaryTree(new StudentComparer());
-tree.Add(new Student("Poliarush", 3, 3, false));
-tree.Add(new Student("Poliarush", 5, 5, false));
-tree.Add(new Student("Poliarush", 12, 4.5, true));
-tree.Add(new Student("Poliarush", 9, 4.5, false));
-tree.Add(new Student("Poliarush", 7, 4.5, false));
-tree.Add(new Student("Poliarush", 8, 4.5, false));
-tree.Add(new Student("Poliarush", 15, 4.5, false));
-tree.Add(new Student("Poliarush", 4, 4.5, true));
-tree.Add(new Student("Poliarush", 1, 4.8, false));
-tree.Add(new Student("Poliarush", 6, 4.2, false));
-tree.Add(new Student("Poliarush", 13, 4.5, false));
+tree.Add(new Student("Ivanenko", 3, 3, true));
+tree.Add(new Student("Shevchenko", 5, 3.8, false));
+tree.Add(new Student("Kovalenko", 12, 4.5, true));
+tree.Add(new Student("Bondarenko", 9, 4.5, false));
+tree.Add(new Student("Tkachenko", 7, 4.5, false));
+tree.Add(new Student("Melnyk", 8, 4, true));
+tree.Add(new Student("Krivenko", 15, 4.5, false));
+tree.Add(new Student("Petryk", 4, 4.5, true));
+tree.Add(new Student("Zhuk", 1, 4.8, false));
+tree.Add(new Student("Horobets", 6, 4.2, false));
+tree.Add(new Student("Rudenko", 13, 4.4, false));
 
 PrintTree(tree);
 
+Console.WriteLine("\nПiсля видалення елементiв:\n");
 
 tree.DeleteElements();
 
