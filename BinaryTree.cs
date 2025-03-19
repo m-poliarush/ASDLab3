@@ -70,68 +70,54 @@ namespace ASDLab3
             }
         }
 
-
-
-        private Node FindNode(Node current, Student student)
+        public void Delete(Student student)
         {
-            if (current == null) return null;
+            Delete(ref root, student);
+            
+        }
+
+        private void Delete(ref Node current, Student student)
+        {
+            if (current == null) return;
 
             int compare = comparer.Compare(student, current.Data);
             if (compare < 0)
             {
-                return FindNode(current.Left, student);
+                Delete(ref current.Left, student);
             }
             else if (compare > 0)
             {
-                return FindNode(current.Right, student);
+                Delete(ref current.Right, student);
             }
             else
             {
-                return current;
-            }
-        }
-
-        public void Delete(Student student)
-        {
-            Node nodeToDelete =  FindNode(root, student);
-            Delete(ref nodeToDelete);
-            
-        }
-
-        private void Delete(ref Node current)
-        {
-            if (current == null) return;
-
-            if (current.Left == null && current.Right == null)
-            {
-                current = null;
-            }
-            else if (current.Left == null)
-            {
-                current = current.Right;
-            }
-            else if (current.Right == null)
-            {
-                current = current.Left;
-            }
-            else
-            {
-                Node minParent = current;
-                Node minNode = current.Right;
-
-                while (minNode.Left != null)
+                if (current.Left == null && current.Right == null)
                 {
-                    minParent = minNode;
-                    minNode = minNode.Left;
+                    current = null;
                 }
-
-                current.Data = minNode.Data;
-
-
-                if (minParent.Left == minNode)
-                    minParent.Left = minNode.Right;
+                else if (current.Left == null)
+                {
+                    current = current.Right;
+                }
+                else if (current.Right == null)
+                {
+                    current = current.Left;
+                }
                 else
-                    minParent.Right = minNode.Right;
+                {
+                    Node minParent = current;
+                    Node minNode = current.Right;
+
+                    while (minNode.Left != null)
+                    {
+                        minParent = minNode;
+                        minNode = minNode.Left;
+                    }
+
+                    current.Data = minNode.Data;
+
+                    Delete(ref minParent.Left, minNode.Data);
+                }
             }
         }
 
