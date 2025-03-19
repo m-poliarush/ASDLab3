@@ -13,6 +13,8 @@ namespace ASDLab3
     public class BinaryTree : IEnumerable<Student>
     {
         private IComparer<Student> comparer;
+        private Node root;
+
         public class Node
         {
             public Student Data;
@@ -20,18 +22,16 @@ namespace ASDLab3
             public Node Left;
             public Node(Student data)
             {
-
                 this.Data = data;
-
             }
-
         }
-        private Node root;
+
         public BinaryTree(IComparer<Student> comparer)
         {
             this.comparer = comparer;
             this.root = null;
         }
+
         public void Add(Student data)
         {
             if (root == null)
@@ -43,6 +43,7 @@ namespace ASDLab3
                 AddTo(root, data);
             }
         }
+
         private void AddTo(Node node, Student data)
         {
             if (comparer.Compare(data, node.Data) < 0)
@@ -68,71 +69,33 @@ namespace ASDLab3
                 }
             }
         }
-        public IEnumerable<Student> PostOrderTraversal()
-        {
-            return PostOrderTraversal(root);
-        }
 
-        private IEnumerable<Student> PostOrderTraversal(Node node)
+
+
+        private Node FindNode(Node current, Student student)
         {
-            if (node != null)
+            if (current == null) return null;
+
+            int compare = comparer.Compare(student, current.Data);
+            if (compare < 0)
             {
-                foreach (var left in PostOrderTraversal(node.Left))
-                    yield return left;
-
-                foreach (var right in PostOrderTraversal(node.Right))
-                    yield return right;
-
-                yield return node.Data;
+                return FindNode(current.Left, student);
+            }
+            else if (compare > 0)
+            {
+                return FindNode(current.Right, student);
+            }
+            else
+            {
+                return current;
             }
         }
-        public IEnumerator<Student> GetEnumerator()
-        {
-            return PostOrderTraversal().GetEnumerator();
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Delete(Student student)
         {
-            return GetEnumerator();
-        }
-        private void search(Node current, List<Student> list)
-        {
-            if (current == null)
-            {
-                return;
-            }
-            search(current.Left, list);
-            if (current.Data.AverageMark >= 4.5 && current.Data.Conference == true)
-            {
-                if (list != null)
-                {
-                    list.Add(current.Data);
-                }
-            }
-            search(current.Right, list);
-        }
-        public List<Student> Find()
-        {
-            List<Student> list = new List<Student>();
-            search(root, list);
-            return list;
-        }
-        public void DeleteElements()
-        {
-            DeleteElements(ref root);
-        }
-
-        private void DeleteElements(ref Node current)
-        {
-            if (current == null) return;
-
-            DeleteElements(ref current.Left);
-            DeleteElements(ref current.Right);
-
-            if (current.Data.AverageMark >= 4.5 && current.Data.Conference)
-            {
-                Delete(ref current);
-            }
+            Node nodeToDelete =  FindNode(root, student);
+            Delete(ref nodeToDelete);
+            
         }
 
         private void Delete(ref Node current)
@@ -172,7 +135,32 @@ namespace ASDLab3
             }
         }
 
-       
+        public IEnumerable<Student> PostOrderTraversal()
+        {
+            return PostOrderTraversal(root);
+        }
+
+        private IEnumerable<Student> PostOrderTraversal(Node node)
+        {
+            if (node != null)
+            {
+                foreach (var left in PostOrderTraversal(node.Left))
+                    yield return left;
+                foreach (var right in PostOrderTraversal(node.Right))
+                    yield return right;
+                yield return node.Data;
+            }
+        }
+
+        public IEnumerator<Student> GetEnumerator()
+        {
+            return PostOrderTraversal().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
 }

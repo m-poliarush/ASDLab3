@@ -1,13 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ASDLab3;
-void PrintTree(BinaryTree tree)
-{
-    Console.WriteLine($"{"Surname", -15} {"Card ID", -10}{"Average Mark", -15}{"Actions in conferences",-10}");
-    foreach (Student student in tree)
-    {
-        Console.WriteLine($"{student.Surname, -15} {student.StudentID, -10} {student.AverageMark, -15}{student.Conference, -10}");
-    }
-}
+
 
 
 
@@ -26,12 +19,12 @@ tree.Add(new Student("Zhuk", 1, 4.8, false));
 tree.Add(new Student("Horobets", 6, 4.2, false));
 tree.Add(new Student("Rudenko", 13, 4.4, false));
 
-PrintTree(tree);
+tree.PrintTree();
 
 Console.WriteLine("\nПiсля видалення елементiв:\n");
 
-tree.DeleteElements();
+tree.DeleteStudents(4.5, true);
 
-PrintTree(tree);
+tree.PrintTree();
 
 
